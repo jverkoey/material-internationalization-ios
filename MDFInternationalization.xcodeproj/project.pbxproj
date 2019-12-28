@@ -21,7 +21,6 @@
 		4096E5DA1D78CBD400389ECD /* UIImage+MaterialRTL.m in Sources */ = {isa = PBXBuildFile; fileRef = 4096E5D11D78CBD400389ECD /* UIImage+MaterialRTL.m */; };
 		4096E5DB1D78CBD400389ECD /* UIView+MaterialRTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 4096E5D21D78CBD400389ECD /* UIView+MaterialRTL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4096E5DC1D78CBD400389ECD /* UIView+MaterialRTL.m in Sources */ = {isa = PBXBuildFile; fileRef = 4096E5D31D78CBD400389ECD /* UIView+MaterialRTL.m */; };
-		4096E5E11D78CC0100389ECD /* MDFInternationalizationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4096E5DE1D78CBE700389ECD /* MDFInternationalizationTests.m */; };
 		4096E5E61D78E02600389ECD /* MDFRTLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4096E5E51D78E02600389ECD /* MDFRTLTests.m */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +52,6 @@
 		4096E5D21D78CBD400389ECD /* UIView+MaterialRTL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+MaterialRTL.h"; path = "Sources/UIView+MaterialRTL.h"; sourceTree = "<group>"; };
 		4096E5D31D78CBD400389ECD /* UIView+MaterialRTL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+MaterialRTL.m"; path = "Sources/UIView+MaterialRTL.m"; sourceTree = "<group>"; };
 		4096E5DD1D78CBE700389ECD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = "<group>"; };
-		4096E5DE1D78CBE700389ECD /* MDFInternationalizationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDFInternationalizationTests.m; path = Tests/MDFInternationalizationTests.m; sourceTree = "<group>"; };
 		4096E5E51D78E02600389ECD /* MDFRTLTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDFRTLTests.m; path = Tests/MDFRTLTests.m; sourceTree = "<group>"; };
 		40F838321F50D7A500DE0781 /* MDFInternationalization.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MDFInternationalization.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				4096E5DD1D78CBE700389ECD /* Info.plist */,
-				4096E5DE1D78CBE700389ECD /* MDFInternationalizationTests.m */,
 				4096E5E51D78E02600389ECD /* MDFRTLTests.m */,
 				4008C246201B6A3D00F089DB /* MDFBidiTests.m */,
 			);
@@ -220,6 +217,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 4096E5A51D78CB5500389ECD;
@@ -269,7 +267,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4096E5E61D78E02600389ECD /* MDFRTLTests.m in Sources */,
-				4096E5E11D78CC0100389ECD /* MDFInternationalizationTests.m in Sources */,
 				4008C247201B6A3D00F089DB /* MDFBidiTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

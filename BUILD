@@ -17,7 +17,7 @@ load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
 load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 load("@bazel_ios_warnings//:strict_warnings_objc_library.bzl", "strict_warnings_objc_library")
-load(":apple_framework_relative_headers.bzl", "apple_framework_relative_headers")
+load("@bazel_apple_framework_relative_headers//:apple_framework_relative_headers.bzl", "apple_framework_relative_headers")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -37,7 +37,7 @@ strict_warnings_objc_library(
         "CoreImage",
     ],
     enable_modules = 1,
-    includes = ["Sources"],
+    module_name = "MDFInternationalization",
     visibility = ["//visibility:public"],
     deps = [
         ":MDFInternationalizationFrameworkHeaders",
@@ -66,14 +66,7 @@ objc_library(
     ]),
     deps = [
         ":MDFInternationalization",
-        ":MDFInternationalizationFrameworkHeaders",
     ],
-)
-
-ios_test_runner(
-    name = "IPAD_PRO_12_9_IN_9_3",
-    device_type = "iPad Pro (12.9-inch)",
-    os_version = "9.3",
 )
 
 ios_test_runner(
@@ -102,7 +95,6 @@ ios_unit_test_suite(
     minimum_os_version = "9.0",
     timeout = "short",
     runners = [
-        ":IPAD_PRO_12_9_IN_9_3",
         ":IPHONE_7_PLUS_IN_10_3",
         ":IPHONE_X_IN_11_4",
         ":IPHONE_XS_MAX_IN_12_2",

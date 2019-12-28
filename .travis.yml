@@ -1,47 +1,39 @@
 language: objective-c
-sudo: false
-
-# Only do a shallow clone of our Git repo.
-# https://docs.travis-ci.com/user/customizing-the-build#Git-Clone-Depth
-git:
-  depth: 3
-
-# Only fire off builds for specific branches.
-branches:
-  only:
-    - develop
-    - stable
-    - /^feature-.*$/
-    - release-candidate
-      
-xcode_project: MDFInternationalization.xcodeproj
-xcode_scheme: MDFInternationalizationTests
-
-matrix:
+os: osx
+osx_image:
+  - xcode11.3
+  - xcode11.2
+  - xcode10.3
+env:
+  - TOOLCHAIN=bazel
+  - PROJECT="MDFInternationalization"
+  - PROJECT="Examples/Flags"
+jobs:
   include:
-    - osx_image: xcode9
-      # The iPhone X was chosen because it is a device with a strange screen size and
-      # the 'notch'.
-      # OS 11.0 was chosen as the latest generally available iOS version.
-      env: DESTINATION="platform=iOS Simulator,name=iPhone X,OS=11.0" SDK="iphonesimulator11.0"
-    - osx_image: xcode9
-      # The iPhone 7 Plus was chosen because it is a device with a 3x screen and also changes
-      # its size category trait on rotation.
-      # OS 10.3.1 was chosen to represent iOS 10.
-      env: DESTINATION="platform=iOS Simulator,name=iPhone 7 Plus,OS=10.3.1" SDK="iphonesimulator11.0"
-    - osx_image: xcode8.3
-      # The iPad Pro 12.9 was chosen because it is the largest resolution we can test on.
-      # OS 9.3 was chosen to round out the range of iOS versions we are testing on.
-      env: DESTINATION="platform=iOS Simulator,name=iPad Pro (12.9-inch),OS=9.3" SDK="iphonesimulator10.3"
-    - osx_image: xcode8.3
-      # The iPhone 5 was chosen because it is a 32-bit device.
-      # OS 8.1 was chosen because it is the earliest iOS offered here.
-      env: DESTINATION="platform=iOS Simulator,name=iPhone 5,OS=8.1" SDK="iphonesimulator10.3"
-
-# Test Execution
-# TODO Enable set -euo pipefail
+    # We only need to run pod lib lint once and with the latest Xcode version.
+    - name: "pod lib lint"
+      osx_image: xcode11.3
+      env: TOOLCHAIN=cocoapods
+before_install:
+  - if [ "$TOOLCHAIN" == "bazel" ]; then
+      wget -O bazelisk "https://github.com/bazelbuild/bazelisk/releases/download/v1.2.1/bazelisk-darwin-amd64";
+      chmod +x "bazelisk";
+    fi
 script:
-  - env
-  - set -o pipefail
-  - echo xcodebuild -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -sdk "$SDK" -destination "$DESTINATION" test
-  - xcodebuild -project "$TRAVIS_XCODE_PROJECT" -scheme "$TRAVIS_XCODE_SCHEME" -sdk "$SDK" -destination "$DESTINATION" test | xcpretty
+  - if [ "$TOOLCHAIN" == "bazel" ]; then
+      ./bazelisk test //...;
+    elif [ "$TOOLCHAIN" == "cocoapods" ]; then
+      pod lib lint;
+    elif [ "$PROJECT" == "MDFInternationalization" ]; then
+      set -o pipefail;
+      xcodebuild build
+        -project MDFInternationalization.xcodeproj
+        -scheme MDFInternationalization
+        -destination "platform=iOS Simulator,name=iPhone Xs Max,OS=12.2" | xcpretty;
+    elif [ "$PROJECT" == "Examples/Flags" ]; then
+      set -o pipefail;
+      xcodebuild build
+        -workspace Examples/Flags.xcworkspace
+        -scheme Flags
+        -destination "platform=iOS Simulator,name=iPhone Xs Max,OS=12.2" | xcpretty;
+    fi
